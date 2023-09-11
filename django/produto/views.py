@@ -1,16 +1,25 @@
 from django.shortcuts import render
+from django.core.paginator import Paginator
+
+from produto.forms import PesquisaProdutoForm, ProdutoForm
+from produto.models import Produto
 
 
-def index(request):
-    mensagem = "Esta frase está sendo exibida pela página index.html de produto."
-    return render(request, 'produto/index.html', {'frase': mensagem})
+def lista_produto(request):
+    form = PesquisaProdutoForm(request.GET)
+    if form.is_valid():
+        nome = form.cleaned_data['nome']
+        lista_de_produtos = Produto.objects.filter(nome__icontains=nome).order_by('nome')
+        paginator = Paginator(lista_de_produtos, 3)
+        pagina = request.GET.get('pagina')
+        page_obj = paginator.get_page(pagina)
+        print(lista_de_produtos)
+        print(page_obj)
+        return render(request, 'produto/pesquisa_produto.html', {'produtos': page_obj, 'form': form, 'nome': nome})
+    else:
+        raise ValueError('Ocorreu um erro inesperado ao tentar recuperar um produto.')
 
 
-def pagina1(request):
-    mensagem = "Esta frase está sendo exibida pela página pagina1.html de produto."
-    return render(request, 'produto/pagina1.html', {'frase': mensagem})
-
-
-def pagina2(request):
-    mensagem = "Esta frase está sendo exibida pela página pagina2.html de produto."
-    return render(request, 'produto/pagina2.html', {'frase': mensagem})
+def cadastra_produto(request):
+    produto_form = ProdutoForm()
+    return render(request, 'produto/cadastra_produto.html', {'from': produto_form})

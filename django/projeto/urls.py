@@ -21,3 +21,9 @@ urlpatterns = [path('', index, name="index"),
                path('produto/', include('produto.urls')),
                path('admin/', admin.site.urls), ]
 
+#     Como acessar a página index.html do projeto:
+#     http://127.0.0.1:8000/
+#
+#     Como acessar a página index.html de produto:
+#     http://127.0.0.1:8000/produto/
+

@@ -4,7 +4,7 @@ from .models import Produto
 
 class ProdutoAdmin(admin.ModelAdmin):
     fields = ('categoria', 'nome', 'slug', 'imagem', 'qtd_estoque', 'preco', 'disponivel')
-    list_display = ['nome', 'slug', 'categoria', 'imagem', 'qtd_estoque', 'preco', 'disponivel']
+    list_display = ['nome', 'slug', 'categoria', 'imagem', 'qtd_estoque', 'preco', 'disponivel', 'data_cadastro']
     search_fields = ['nome', 'imagem']
     list_filter = ['categoria']
     list_editable = ['categoria', 'imagem', 'qtd_estoque', 'preco', 'disponivel']
